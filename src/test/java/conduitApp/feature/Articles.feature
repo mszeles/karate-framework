@@ -1,11 +1,10 @@
 Feature: Articles
+
+#Executes before each scenario
 Background: Define url
     Given url 'http://localhost:3000/api/'
-    Given path 'users/login'
-    And request {"user": {"email": "test@test.hu", "password": "test"}}
-    When method Post
-    Then status 200
-    * def token = response.user.token
+    * def tokenResponse = call read('classpath:helpers/CreateToken.feature')
+    * def token = tokenResponse.authToken
 
 #@ignore
 Scenario: Create a new article
