@@ -4,7 +4,7 @@ Feature: Articles
 Background: Define url
     Given url 'http://localhost:3000/api/'
     #will call this metho only once instead of before each scenario
-    * def tokenResponse = callonce read('classpath:helpers/CreateToken.feature')
+    * def tokenResponse = callonce read('classpath:helpers/CreateToken.feature') {"email": "test@test.hu", "password": "test"}
     * def token = tokenResponse.authToken
 
 #@ignore
