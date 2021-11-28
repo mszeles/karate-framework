@@ -1,6 +1,6 @@
 Feature: Tests for home page
     Background: Definee url
-        Given url 'http://localhost:3000/api/'
+        Given url apiUrl
 
     Scenario: Get all tags
         Given path 'tags'
