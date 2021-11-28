@@ -7,6 +7,7 @@ Background: Define url
     Then status 200
     * def token = response.user.token
 
+@ignore
 Scenario: Create a new article
     Given header Authorization = 'Token ' + token
     Given path 'articles'
