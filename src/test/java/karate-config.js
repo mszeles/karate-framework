@@ -19,5 +19,8 @@ function fn() {
   else {
     karate.log('No matching environment found')
   }
+
+  var accessToken = karate.callSingle('classpath:helpers/CreateToken.feature', config).authToken
+  karate.configure('headers', {Authorization: 'Token ' + accessToken})
   return config;
 }

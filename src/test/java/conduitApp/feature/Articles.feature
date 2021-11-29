@@ -3,13 +3,9 @@ Feature: Articles
 #Executes before each scenario
 Background: Define url
     Given url apiUrl
-    #will call this metho only once instead of before each scenario
-    * def tokenResponse = callonce read('classpath:helpers/CreateToken.feature')
-    * def token = tokenResponse.authToken
 
 #@ignore
 Scenario: Create a new article
-    Given header Authorization = 'Token ' + token
     Given path 'articles'
     And request {"article": {"tagList": [], "title": "Blabla", "description": "description", "body": body}}
     When method Post
@@ -17,7 +13,6 @@ Scenario: Create a new article
     And match response.article.title == "Blabla"
 
 Scenario: Create and delete article
-    Given header Authorization = 'Token ' + token
     Given path 'articles'
     And request {"article": {"tagList": [], "title": "Delete me", "description": "description", "body": body}}
     When method Post
@@ -30,7 +25,6 @@ Scenario: Create and delete article
     Then status 200
     And match response.articles[0].title == "Delete me"
 
-    Given header Authorization = 'Token ' + token
     Given path 'articles', articleId
     When method Delete
     Then status 204
