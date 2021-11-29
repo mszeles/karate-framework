@@ -93,10 +93,28 @@ Scenario: Comment articles
             }
         }
     """
+    * def commentCount = response.comments.length
 
     Given path 'articles/' + slugIdOfFirstArticle + '/comments'
     And request {"comment": {"body":"A comment"}}
     When method Post
     Then status 200
+    * def commentId = response.comment.id
+
+    Given path 'articles/' + slugIdOfFirstArticle + '/comments'
+    When method Get
+    Then status 200
+    And match (commentCount + 1) == response.comments.length
+
+    Given path 'articles/' + slugIdOfFirstArticle + '/comments/' + commentId
+    When method Delete
+    Then status 204
+
+    Given path 'articles/' + slugIdOfFirstArticle + '/comments'
+    When method Get
+    Then status 200
+    And match commentCount == response.comments.length
+
+
 
 
