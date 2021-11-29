@@ -15,6 +15,7 @@ Feature: Tests for home page
         And match each response.tags == '#string'
 
     Scenario: Get articles
+        * def timeValidator = read('classpath:helpers/timeValidator.js')
         Given params { limit: 10, offset: 0}
         Given path 'articles'
         When method Get
@@ -32,6 +33,27 @@ Feature: Tests for home page
         #bio type is either string or null
         And match each response..bio == '##string'
         #Fuzzy mathcing end
+        #Schema Validation
+        And match each response.articles ==
+        """
+        {
+            "slug": "#string",
+            "title": "#string",
+            "description": "#string",
+            "body": "#string",
+            "createdAt": "#? timeValidator(_)",
+            "updatedAt": "#? timeValidator(_)",
+            "tagList": "#array",
+            "favorited": "#boolean",
+            "favoritesCount": "#number",
+            "author": {
+                "username": "#string",
+                "bio": "##string",
+                "image": "#string",
+                "following": "#boolean"
+            }
+        }
+        """
 
         #Articles feature file always adds new article so this asertion is not ok anymore
         #And match response == {"articles": "#array", "articlesCount": 5}
