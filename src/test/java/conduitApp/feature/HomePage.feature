@@ -1,6 +1,7 @@
 Feature: Tests for home page
     Background: Definee url
         Given url apiUrl
+        * def articleValidator = read('classpath:conduitApp/json/articleValidator.json')
 
     Scenario: Get all tags
         Given path 'tags'
@@ -21,7 +22,6 @@ Feature: Tests for home page
         Then status 200
         And match response.articles[0].createdAt contains '2021'
         #each articles
-        And match response.articles[*].favoritesCount contains 0
         And match response.articles[*].author.bio contains null
         #bio can be anywhere inside articles
         And match response.articles[*]..bio contains null
@@ -33,26 +33,7 @@ Feature: Tests for home page
         And match each response..bio == '##string'
         #Fuzzy mathcing end
         #Schema Validation
-        And match each response.articles ==
-        """
-        {
-            "slug": "#string",
-            "title": "#string",
-            "description": "#string",
-            "body": "#string",
-            "createdAt": "#? timeValidator(_)",
-            "updatedAt": "#? timeValidator(_)",
-            "tagList": "#array",
-            "favorited": "#boolean",
-            "favoritesCount": "#number",
-            "author": {
-                "username": "#string",
-                "bio": "##string",
-                "image": "#string",
-                "following": "#boolean"
-            }
-        }
-        """
+        And match each response.articles == articleValidator
 
         #Articles feature file always adds new article so this asertion is not ok anymore
         #And match response == {"articles": "#array", "articlesCount": 5}
