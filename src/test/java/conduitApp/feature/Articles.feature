@@ -1,20 +1,26 @@
+@debug
 Feature: Articles
 
 #Executes before each scenario
 Background: Define url
     Given url apiUrl
+    * def articleRequestBody = read('classpath:conduitApp/json/newArticleRequest.json')
+    * def dataGenerator = Java.type('helpers.DataGenerator')
+    * set articleRequestBody.article.title = dataGenerator.getRandomArticleValues().title
+    * set articleRequestBody.article.description = dataGenerator.getRandomArticleValues().description
+    * set articleRequestBody.article.body = dataGenerator.getRandomArticleValues().body
 
-#@ignore
+
 Scenario: Create a new article
     Given path 'articles'
-    And request {"article": {"tagList": [], "title": "Blabla", "description": "description", "body": body}}
+    And request articleRequestBody
     When method Post
     Then status 200
-    And match response.article.title == "Blabla"
+    And match response.article.title == articleRequestBody.article.title
 
 Scenario: Create and delete article
     Given path 'articles'
-    And request {"article": {"tagList": [], "title": "Delete me", "description": "description", "body": body}}
+    And request articleRequestBody
     When method Post
     Then status 200
     * def articleId = response.article.slug
@@ -23,7 +29,7 @@ Scenario: Create and delete article
     Given path 'articles'
     When method Get
     Then status 200
-    And match response.articles[0].title == "Delete me"
+    And match response.articles[0].title == articleRequestBody.article.title
 
     Given path 'articles', articleId
     When method Delete
