@@ -1,6 +1,7 @@
 # karate-framework
 
-This project is a framework to automatize API testing using Karate. It contains many features and examples.
+This project is a framework to automatize API testing using Karate also including performance testing with Gatling. 
+It contains many features and examples.
 It is based on the excellent Karate DSL course on Udemy: https://www.udemy.com/course/karate-dsl-api-automation-and-performance-from-zero-to-hero
 
 In order to run the tests, you should clone and run the following project: 
