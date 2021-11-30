@@ -14,7 +14,8 @@ class PerfTest extends Simulation {
     //protocol.nameResolver = (req, ctx) => req.getHeader("karate-name")
     //protocol.runner.karateEnv("perf")
 
-    val create = scenario("Create and delete article").exec(karateFeature("classpath:conduitApp/performance/data/CreateArticle.feature"))
+    val csvFeeder = csv("articles.csv").circular
+    val create = scenario("Create and delete article").feed(csvFeeder).exec(karateFeature("classpath:conduitApp/performance/data/CreateArticle.feature"))
 
     setUp(
         create.inject(

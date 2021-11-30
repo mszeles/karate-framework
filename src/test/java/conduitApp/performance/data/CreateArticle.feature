@@ -6,8 +6,8 @@ Background: Define url
     Given url apiUrl
     * def articleRequestBody = read('classpath:conduitApp/json/newArticleRequest.json')
     * def dataGenerator = Java.type('helpers.DataGenerator')
-    * set articleRequestBody.article.title = dataGenerator.getRandomArticleValues().title
-    * set articleRequestBody.article.description = dataGenerator.getRandomArticleValues().description
+    * set articleRequestBody.article.title = __gatling.Title
+    * set articleRequestBody.article.description = __gatling.Description
     * set articleRequestBody.article.body = dataGenerator.getRandomArticleValues().body
 
 @debug
