@@ -15,6 +15,8 @@ Scenario: Create and delete article
     * configure headers = {"Authorization": #('Token ' + __gatling.token)}
     Given path 'articles'
     And request articleRequestBody
+    #Will replace url in gatling report with the specified name
+    And header karate-name = 'Title requested: ' + __gatling.Title
     When method Post
     Then status 200
     * def articleId = response.article.slug
