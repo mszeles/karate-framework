@@ -7,6 +7,7 @@ import scala.concurrent.duration._
 class PerfTest extends Simulation {
 
     val protocol = karateProtocol(
+        //Merging the DELETE calls in the report
         "/api/articles/{articleId}" -> Nil
     )
 

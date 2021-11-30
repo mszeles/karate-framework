@@ -18,6 +18,9 @@ Scenario: Create and delete article
     Then status 200
     * def articleId = response.article.slug
 
+    #Simulating user think time. Only stops when using gatling
+    * karate.pause(5000)
+
     Given path 'articles', articleId
     When method Delete
     Then status 204
