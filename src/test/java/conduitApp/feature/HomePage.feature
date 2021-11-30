@@ -1,3 +1,4 @@
+@debug
 Feature: Tests for home page
     Background: Definee url
         Given url apiUrl
@@ -39,3 +40,18 @@ Feature: Tests for home page
         #And match response == {"articles": "#array", "articlesCount": 5}
         #And match response.articles == '#[1]'
         #And match response.articlesCount == 1
+
+    Scenario: Number to string
+        * def foo = 10
+        * def json = {"bar": #(foo + '')}
+        * match json == {"bar": '10'}
+        
+    Scenario: String to number
+        * def foo = '10'
+        * def json = {"bar": #(foo*1)}
+        #~~ converts double to number
+        * def json2 = {"bar": #(~~parseInt(foo))}
+        * match json == {"bar": 10}
+        * match json2 == {"bar": 10}
+    
+    

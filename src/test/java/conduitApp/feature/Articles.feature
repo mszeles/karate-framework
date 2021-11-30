@@ -152,7 +152,6 @@ Scenario: Retry call
     When method Get
     Then status 200
     And match response.articles[0].favoritesCount == 1
-@debug
 Scenario: Sleep call
     * def sleep = function(pause) {java.lang.Thread.sleep(pause)}
     Given params { limit: 10, offset: 0}
@@ -160,5 +159,3 @@ Scenario: Sleep call
     When method Get
     * eval sleep(5000)
     Then status 200
-    
-

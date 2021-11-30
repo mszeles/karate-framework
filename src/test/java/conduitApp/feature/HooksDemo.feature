@@ -11,7 +11,6 @@ Background:
    #  and are NOT supported in 'called' features
    # one limitation of afterScenario and afterFeature is that any feature steps involved will NOT appear
    # in the JSON report output and HTML reports
-   # At the moment it looks like after feature is not working
    * configure afterFeature = 
    """
        function() { 
