@@ -66,7 +66,6 @@ Scenario: Favorite articles
     And match each response.articles == articleValidator
     And match response.articles[*].slug contains slugIdOfFirstArticle
 
-@debug
 Scenario: Comment articles
     #* def timeValidator = read('classpath:helpers/timeValidator.js')
     Given path 'articles'
