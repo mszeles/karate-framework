@@ -4,8 +4,11 @@ import com.intuit.karate.gatling.PreDef._
 import io.gatling.core.Predef._
 import scala.concurrent.duration._
 
+import conduitApp.performance.createTokens.CreateTokens;
+
 class PerfTest extends Simulation {
 
+    CreateTokens.createAccessTokens()
     val protocol = karateProtocol(
         //Merging the DELETE calls in the report
         "/api/articles/{articleId}" -> Nil
@@ -15,7 +18,12 @@ class PerfTest extends Simulation {
     //protocol.runner.karateEnv("perf")
 
     val csvFeeder = csv("articles.csv").circular
-    val create = scenario("Create and delete article").feed(csvFeeder).exec(karateFeature("classpath:conduitApp/performance/data/CreateArticle.feature"))
+    val tokenFeeder = Iterator.continually(Map("token" -> CreateTokens.getNextToken()))
+
+    val create = scenario("Create and delete article")
+        .feed(tokenFeeder)
+        .feed(csvFeeder)
+        .exec(karateFeature("classpath:conduitApp/performance/data/CreateArticle.feature"))
 
     setUp(
         create.inject(
