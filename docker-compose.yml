@@ -1,0 +1,18 @@
+version: "3.8"
+services:
+  karate-tests:
+    image: karate-tests
+    build: 
+      context: .
+      dockerfile: ./Dockerfile
+    volumes:
+      #copying target folder back to our target folder after execution
+      - ./target:/usr/src/app/target
+      #copying our .m2 folder to the machine, so maven dependences do not have to be downloaded on running the container
+      - ~/.m2:/root/.m2
+    #needed to access the tested application running on localhost via localhost:3000 - I also had to change the localhost to the machine ip address in karate-config to access it from docker
+    network_mode: "host"      
+    #command: mvn test
+    command: mvn test
+
+
