@@ -1,3 +1,4 @@
+@parallel=false
 Feature: Articles
 
 #Executes before each scenario
@@ -57,7 +58,7 @@ Scenario: Favorite articles
     Given path 'articles'
     When method Get
     Then status 200
-    And match favoritesCountOfFirstArticle == response.articles[0].favoritesCount - 1
+    And match favoritesCountOfFirstArticle == (response.articles[0].favoritesCount - 1)
 
     Given path 'articles'
     Given params { favorited: "test"}
